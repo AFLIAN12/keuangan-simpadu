@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KeuPembayaran;
+use App\Models\KeuTagihan;
 use Illuminate\Http\Request;
 
 class KeuPembayaranController extends Controller
@@ -26,7 +27,17 @@ class KeuPembayaranController extends Controller
         ]);
 
         $pembayaran = KeuPembayaran::create($data);
-        return response()->json(['message' => 'Data tagihan berhasil ditambahkan.',
+        if ($pembayaran->status_verifikasi === 'Terverifikasi') {
+        $totalBayar = KeuPembayaran::where('id_tagihan', $pembayaran->id_tagihan)
+            ->where('status_verifikasi', 'Terverifikasi')
+            ->sum('jumlah_bayar');
+
+        $tagihan = KeuTagihan::find($pembayaran->id_tagihan);
+        if ($tagihan && $totalBayar >= $tagihan->nominal) {
+            $tagihan->status_tagihan = 1; // Lunas
+            $tagihan->save();
+        }}
+        return response()->json(['message' => 'Data pembayaran berhasil ditambahkan.',
         'data' => $pembayaran], 201);
     }
 
@@ -40,7 +51,7 @@ class KeuPembayaranController extends Controller
     public function update(Request $request, $id)
     {
         $pembayaran = KeuPembayaran::findOrFail($id);
-
+        
         $data = $request->validate([
             'tgl_bayar' => 'sometimes|date',
             'jumlah_bayar' => 'sometimes|numeric|min:0',
@@ -50,18 +61,39 @@ class KeuPembayaranController extends Controller
         ]);
 
         $pembayaran->update($data);
-        return response()->json(['message' => 'Data tagihan berhasil diganti.',
+        if ($pembayaran->status_verifikasi === 'Terverifikasi') {
+        $totalBayar = KeuPembayaran::where('id_tagihan', $pembayaran->id_tagihan)
+            ->where('status_verifikasi', 'Terverifikasi')
+            ->sum('jumlah_bayar');
+
+        $tagihan = KeuTagihan::find($pembayaran->id_tagihan);
+        if ($tagihan && $totalBayar >= $tagihan->nominal) {
+            $tagihan->status_tagihan = 1; // Lunas
+            $tagihan->save();}}
+
+        return response()->json(['message' => 'Data pembayaran berhasil diganti.',
         'data' => $pembayaran]);
     }
 
     // Hapus data pembayaran
     public function destroy($id)
-    {
-        $pembayaran = KeuPembayaran::findOrFail($id);
-        $pembayaran->delete();
+{
+    $pembayaran = KeuPembayaran::findOrFail($id);
+    $idTagihan = $pembayaran->id_tagihan;
+    $pembayaran->delete();
 
-        return response()->json(['message' => 'Data pembayaran berhasil dihapus']);
+    // Update status tagihan jika perlu
+    $tagihan = KeuTagihan::find($idTagihan);
+    if ($tagihan) {
+        $totalBayar = KeuPembayaran::where('id_tagihan', $idTagihan)
+            ->where('status_verifikasi', 'Terverifikasi')
+            ->sum('jumlah_bayar');
+        $tagihan->status_tagihan = $totalBayar >= $tagihan->nominal ? 1 : 0;
+        $tagihan->save();
     }
+
+    return response()->json(['message' => 'Data pembayaran berhasil dihapus']);
+}
 
     // (Opsional) Filter berdasarkan tagihan
     public function byTagihan($idTagihan)

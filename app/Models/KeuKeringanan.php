@@ -10,10 +10,16 @@ class KeuKeringanan extends Model
     protected $primaryKey = 'id_keringanan';
 
     protected $fillable = [
-    'nim', 'tahun_ajaran', 'jenis_keringanan',
-    'jumlah_potongan', 'deskripsi_keringanan',
-    'status_keringanan', 'tgl_konfirmasi',
-    'catatan_admin', 'id_user'
+    'nim',
+    'tahun_ajaran',
+    'jenis_keringanan',
+    'jumlah_potongan',
+    'deskripsi_keringanan',
+    'status_keringanan',
+    'tgl_konfirmasi',
+    'catatan_admin',
+    'id_user',
+    'id_tagihan',
 ];
 
 }
