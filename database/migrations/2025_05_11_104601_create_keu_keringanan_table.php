@@ -10,7 +10,7 @@ return new class extends Migration {
     {
         Schema::create('keu_keringanan', function (Blueprint $table) {
             $table->id('id_keringanan'); // INT AUTO_INCREMENT PRIMARY KEY
-            $table->char('nim', 16); // NIM format tetap
+            $table->string('nim', 16); // NIM format tetap
             $table->string('tahun_ajaran', 10);
             $table->string('jenis_keringanan', 50);
             $table->decimal('jumlah_potongan', 12, 2);
