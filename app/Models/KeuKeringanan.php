@@ -11,7 +11,7 @@ class KeuKeringanan extends Model
 
     protected $fillable = [
     'nim',
-    'tahun_ajaran',
+    'id_thn_ak',
     'jenis_keringanan',
     'jumlah_potongan',
     'deskripsi_keringanan',

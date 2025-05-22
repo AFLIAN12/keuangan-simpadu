@@ -18,8 +18,8 @@ class KeuKeringananController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nim' => 'required|string|max:20',
-            'tahun_ajaran' => 'required|string|max:10',
+            'nim' => 'required|string|max:16',
+            'id_thn_ak' => 'required|string|size:5',
             'jenis_keringanan' => 'required|string|max:50',
             'jumlah_potongan' => 'required|numeric|min:0',
             'deskripsi_keringanan' => 'nullable|string',

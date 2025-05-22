@@ -12,7 +12,7 @@ class KeuTagihan extends Model
     protected $fillable = [
     'nim',
     'nama_tagihan',
-    'tahun_ajaran',
+    'id_thn_ak',
     'nominal',
     'status_tagihan',
     'kategori_ukt',

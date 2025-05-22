@@ -17,9 +17,9 @@ class KeuTagihanController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nim' => 'required|string|max:20',
+            'nim' => 'required|string|size:16',
             'nama_tagihan' => 'required|string|max:100',
-            'tahun_ajaran' => 'required|string|max:10',
+            'id_thn_ak' => 'required|string|size:5',
             'nominal' => 'required|numeric|min:0',
             'status_tagihan' => 'in:0,1',
             'kategori_ukt' => 'nullable|string|max:100',
@@ -48,7 +48,7 @@ class KeuTagihanController extends Controller
 
         $data = $request->validate([
             'nama_tagihan' => 'sometimes|string|max:100',
-            'tahun_ajaran' => 'sometimes|string|max:10',
+            'id_thn_ak' => 'somtimes|string|size:5',
             'nominal' => 'sometimes|numeric|min:0',
             'status_tagihan' => 'in:0,1',
             'kategori_ukt' => 'nullable|string|max:100',
