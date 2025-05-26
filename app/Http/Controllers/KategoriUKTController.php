@@ -17,7 +17,7 @@ class KategoriUKTController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'kategori' => 'required|string|max:100',
+            'kategori_ukt' => 'required|string|max:100',
             'nominal' => 'required|integer|min:0',
             'level' => 'required|integer',
         ]);
@@ -37,7 +37,7 @@ class KategoriUKTController extends Controller
     {
         $kategori = KategoriUKT::findOrFail($id);
         $data = $request->validate([
-            'kategori' => 'sometimes|string|max:100',
+            'kategori_ukt' => 'sometimes|string|max:100',
             'nominal' => 'sometimes|integer|min:0',
             'level' => 'sometimes|integer',
         ]);
