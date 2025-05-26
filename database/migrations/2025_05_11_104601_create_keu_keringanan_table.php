@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->enum('status_keringanan', ['Disetujui', 'Ditolak'])->default('Disetujui');
             $table->dateTime('tgl_konfirmasi')->nullable();
             $table->text('catatan_admin')->nullable();
-            $table->unsignedBigInteger('id_user'); // dari service auth
             $table->unsignedBigInteger('id_tagihan')->nullable(); // opsional relasi ke tagihan
 
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
