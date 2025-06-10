@@ -17,7 +17,6 @@ class KeuKeringanan extends Model
     'deskripsi_keringanan',
     'status_keringanan',
     'tgl_konfirmasi',
-    'catatan_admin',
     'id_tagihan',
 ];
 

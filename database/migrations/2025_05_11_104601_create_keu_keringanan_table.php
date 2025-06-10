@@ -13,11 +13,10 @@ return new class extends Migration {
             $table->char('nim', 16); // NIM format tetap
             $table->char('id_thn_ak', 5);
             $table->string('jenis_keringanan', 50);
-            $table->decimal('jumlah_potongan', 12, 2);
+            $table->unsignedInteger('jumlah_potongan');
             $table->text('deskripsi_keringanan')->nullable();
             $table->enum('status_keringanan', ['Disetujui', 'Ditolak'])->default('Disetujui');
             $table->dateTime('tgl_konfirmasi')->nullable();
-            $table->text('catatan_admin')->nullable();
             $table->unsignedBigInteger('id_tagihan')->nullable(); // opsional relasi ke tagihan
 
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

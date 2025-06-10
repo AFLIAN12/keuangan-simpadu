@@ -11,8 +11,8 @@ class KategoriUKT extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'id_prodi',
         'kategori_ukt',
         'nominal',
-        'level',
     ];
 }

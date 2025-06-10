@@ -20,11 +20,10 @@ class KeuKeringananController extends Controller
             'nim' => 'required|string|size:16',
             'id_thn_ak' => 'required|string|size:5',
             'jenis_keringanan' => 'required|string|max:50',
-            'jumlah_potongan' => 'required|numeric|min:0',
+            'jumlah_potongan' => 'required|integer|min:0',
             'deskripsi_keringanan' => 'nullable|string',
             'status_keringanan' => 'nullable|in:Disetujui,Ditolak',
             'tgl_konfirmasi' => 'nullable|date',
-            'catatan_admin' => 'nullable|string',
             'id_tagihan' => 'nullable|integer',
         ]);
 
@@ -49,11 +48,10 @@ class KeuKeringananController extends Controller
         $keringanan = KeuKeringanan::findOrFail($id);
         $data = $request->validate([
             'jenis_keringanan' => 'sometimes|string|max:50',
-            'jumlah_potongan' => 'sometimes|numeric|min:0',
+            'jumlah_potongan' => 'sometimes|integer|min:0',
             'deskripsi_keringanan' => 'nullable|string',
             'status_keringanan' => 'nullable|in:Disetujui,Ditolak',
             'tgl_konfirmasi' => 'nullable|date',
-            'catatan_admin' => 'nullable|string',
             'id_tagihan' => 'nullable|integer',
         ]);
 
