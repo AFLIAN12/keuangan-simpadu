@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KeuTagihan;
 use App\Models\KeuKeringanan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 /**
  * @OA\Info(
@@ -81,7 +82,7 @@ class KeuTagihanController extends Controller
         return response()->json(['message' => 'Tagihan berhasil ditambahkan.', 'data' => $tagihan], 201);
     }
 
-  /**
+/**
  * @OA\Get(
  *     path="/api/tagihan/{id}",
  *     summary="Detail tagihan",
