@@ -320,7 +320,7 @@
                 "tags": [
                     "Keringanan"
                 ],
-                "summary": "Detail keringanan",
+                "summary": "Detail keringanan berdasarkan ID (beserta data mahasiswa dan nama tahun akademik dari microservice)",
                 "operationId": "5040fa5468fadcd21a70b6112839938a",
                 "parameters": [
                     {
@@ -345,7 +345,27 @@
                                         "nim": {
                                             "type": "string"
                                         },
+                                        "mahasiswa": {
+                                            "properties": {
+                                                "nim": {
+                                                    "type": "string"
+                                                },
+                                                "nama": {
+                                                    "type": "string"
+                                                },
+                                                "prodi": {
+                                                    "type": "string"
+                                                },
+                                                "jenjang": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
                                         "id_thn_ak": {
+                                            "type": "string"
+                                        },
+                                        "nama_thn_ak": {
                                             "type": "string"
                                         },
                                         "jenis_keringanan": {
@@ -447,70 +467,6 @@
                 "responses": {
                     "200": {
                         "description": "Data keringanan berhasil dihapus"
-                    }
-                }
-            }
-        },
-        "/api/keringanan/nim/{nim}": {
-            "get": {
-                "tags": [
-                    "Keringanan"
-                ],
-                "summary": "Tampilkan semua keringanan berdasarkan NIM",
-                "operationId": "86c38c81df610db89169e20b5ec1098b",
-                "parameters": [
-                    {
-                        "name": "nim",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Berhasil mengambil data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "id_keringanan": {
-                                                "type": "integer"
-                                            },
-                                            "nim": {
-                                                "type": "string"
-                                            },
-                                            "id_thn_ak": {
-                                                "type": "string"
-                                            },
-                                            "jenis_keringanan": {
-                                                "type": "string"
-                                            },
-                                            "jumlah_potongan": {
-                                                "type": "integer"
-                                            },
-                                            "deskripsi_keringanan": {
-                                                "type": "string"
-                                            },
-                                            "status_keringanan": {
-                                                "type": "string"
-                                            },
-                                            "tgl_konfirmasi": {
-                                                "type": "string",
-                                                "format": "date"
-                                            },
-                                            "id_tagihan": {
-                                                "type": "integer"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             }
@@ -651,6 +607,22 @@
                                         },
                                         "nama_tagihan": {
                                             "type": "string"
+                                        },
+                                        "id_thn_ak": {
+                                            "type": "string"
+                                        },
+                                        "nama_thn_ak": {
+                                            "type": "string"
+                                        },
+                                        "status_tagihan": {
+                                            "type": "integer"
+                                        },
+                                        "tgl_terbit": {
+                                            "type": "string",
+                                            "format": "date"
+                                        },
+                                        "id_kategori_ukt": {
+                                            "type": "integer"
                                         },
                                         "kategori_ukt": {
                                             "type": "string"

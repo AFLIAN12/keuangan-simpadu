@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KeuKeringanan;
+use Illuminate\Support\Facades\Http;
 
 class KeuKeringananController extends Controller
 {
@@ -81,10 +82,10 @@ class KeuKeringananController extends Controller
         ], 201);
     }
 
-    /**
+/**
  * @OA\Get(
  *     path="/api/keringanan/{id}",
- *     summary="Detail keringanan",
+ *     summary="Detail keringanan berdasarkan ID (beserta data mahasiswa dan nama tahun akademik dari microservice)",
  *     tags={"Keringanan"},
  *     @OA\Parameter(
  *         name="id",
@@ -98,7 +99,16 @@ class KeuKeringananController extends Controller
  *         @OA\JsonContent(
  *             @OA\Property(property="id_keringanan", type="integer"),
  *             @OA\Property(property="nim", type="string"),
+ *             @OA\Property(
+ *                 property="mahasiswa",
+ *                 type="object",
+ *                 @OA\Property(property="nim", type="string"),
+ *                 @OA\Property(property="nama", type="string"),
+ *                 @OA\Property(property="prodi", type="string"),
+ *                 @OA\Property(property="jenjang", type="string")
+ *             ),
  *             @OA\Property(property="id_thn_ak", type="string"),
+ *             @OA\Property(property="nama_thn_ak", type="string"),
  *             @OA\Property(property="jenis_keringanan", type="string"),
  *             @OA\Property(property="jumlah_potongan", type="integer"),
  *             @OA\Property(property="deskripsi_keringanan", type="string"),
@@ -109,14 +119,49 @@ class KeuKeringananController extends Controller
  *     )
  * )
  */
-    // Detail keringanan
-    public function show($id)
-    {
-        $keringanan = KeuKeringanan::findOrFail($id);
-        return response()->json($keringanan);
+public function show($id)
+{
+    $keringanan = KeuKeringanan::findOrFail($id);
+
+    // Ambil nama_thn_ak dari microservice tahun akademik
+    $nama_thn_ak = null;
+    try {
+        $response = Http::get('http://alamat-microservice-akademik/api/thn-ak/' . $keringanan->id_thn_ak);
+        if ($response->ok()) {
+            $thnAk = $response->json();
+            $nama_thn_ak = $thnAk['nama_thn_ak'] ?? null;
+        }
+    } catch (\Exception $e) {
+        $nama_thn_ak = null;
     }
 
-    /**
+    // Ambil data mahasiswa dari microservice mahasiswa
+    $mahasiswa = null;
+    try {
+        $response = Http::get('http://alamat-microservice-mahasiswa/api/mahasiswa/' . $keringanan->nim);
+        if ($response->ok()) {
+            $mahasiswa = $response->json();
+        }
+    } catch (\Exception $e) {
+        $mahasiswa = null;
+    }
+
+    return response()->json([
+        'id_keringanan' => $keringanan->id_keringanan,
+        'nim' => $keringanan->nim,
+        'mahasiswa' => $mahasiswa,
+        'id_thn_ak' => $keringanan->id_thn_ak,
+        'nama_thn_ak' => $nama_thn_ak,
+        'jenis_keringanan' => $keringanan->jenis_keringanan,
+        'jumlah_potongan' => $keringanan->jumlah_potongan,
+        'deskripsi_keringanan' => $keringanan->deskripsi_keringanan,
+        'status_keringanan' => $keringanan->status_keringanan,
+        'tgl_konfirmasi' => $keringanan->tgl_konfirmasi,
+        'id_tagihan' => $keringanan->id_tagihan,
+    ]);
+}
+
+/**
  * @OA\Put(
  *     path="/api/keringanan/{id}",
  *     summary="Update data keringanan",
@@ -188,38 +233,5 @@ class KeuKeringananController extends Controller
         $keringanan->delete();
 
         return response()->json(['message' => 'Data keringanan berhasil dihapus']);
-    }
-/**
- * @OA\Get(
- *     path="/api/keringanan/nim/{nim}",
- *     summary="Tampilkan semua keringanan berdasarkan NIM",
- *     tags={"Keringanan"},
- *     @OA\Parameter(
- *         name="nim",
- *         in="path",
- *         required=true,
- *         @OA\Schema(type="string")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Berhasil mengambil data",
- *         @OA\JsonContent(type="array", @OA\Items(
- *             @OA\Property(property="id_keringanan", type="integer"),
- *             @OA\Property(property="nim", type="string"),
- *             @OA\Property(property="id_thn_ak", type="string"),
- *             @OA\Property(property="jenis_keringanan", type="string"),
- *             @OA\Property(property="jumlah_potongan", type="integer"),
- *             @OA\Property(property="deskripsi_keringanan", type="string"),
- *             @OA\Property(property="status_keringanan", type="string"),
- *             @OA\Property(property="tgl_konfirmasi", type="string", format="date"),
- *             @OA\Property(property="id_tagihan", type="integer")
- *         ))
- *     )
- * )
- */
-    // (Opsional) Ambil keringanan berdasarkan NIM
-    public function byNim($nim)
-    {
-        return response()->json(KeuKeringanan::where('nim', $nim)->get());
     }
 }

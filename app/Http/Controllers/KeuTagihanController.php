@@ -81,7 +81,7 @@ class KeuTagihanController extends Controller
         return response()->json(['message' => 'Tagihan berhasil ditambahkan.', 'data' => $tagihan], 201);
     }
 
-        /**
+  /**
  * @OA\Get(
  *     path="/api/tagihan/{id}",
  *     summary="Detail tagihan",
@@ -99,6 +99,11 @@ class KeuTagihanController extends Controller
  *             @OA\Property(property="id_tagihan", type="integer"),
  *             @OA\Property(property="nim", type="string"),
  *             @OA\Property(property="nama_tagihan", type="string"),
+ *             @OA\Property(property="id_thn_ak", type="string"),
+ *             @OA\Property(property="nama_thn_ak", type="string"),
+ *             @OA\Property(property="status_tagihan", type="integer"),
+ *             @OA\Property(property="tgl_terbit", type="string", format="date"),
+ *             @OA\Property(property="id_kategori_ukt", type="integer"),
  *             @OA\Property(property="kategori_ukt", type="string"),
  *             @OA\Property(property="nominal", type="integer")
  *         )
@@ -110,11 +115,24 @@ class KeuTagihanController extends Controller
     {
         $tagihan = KeuTagihan::with('kategoriUkt')->findOrFail($id);
 
+    // Ambil nama_thn_ak dari microservice
+    $nama_thn_ak = null;
+    try {
+        $response = Http::get('http://alamat-microservice-akademik/api/thn-ak/' . $tagihan->id_thn_ak);
+        if ($response->ok()) {
+            $thnAk = $response->json();
+            $nama_thn_ak = $thnAk['nama_thn_ak'] ?? null;
+        }
+    } catch (\Exception $e) {
+        $nama_thn_ak = null;
+    }
+
     return response()->json([
         'id_tagihan' => $tagihan->id_tagihan,
         'nim' => $tagihan->nim,
         'nama_tagihan' => $tagihan->nama_tagihan,
         'id_thn_ak' => $tagihan->id_thn_ak,
+        'nama_thn_ak' => $nama_thn_ak,
         'status_tagihan' => $tagihan->status_tagihan,
         'tgl_terbit' => $tagihan->tgl_terbit,
         'id_kategori_ukt' => $tagihan->id_kategori_ukt,
