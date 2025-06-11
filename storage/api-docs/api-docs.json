@@ -1,0 +1,814 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Keuangan Simpadu API",
+        "description": "Dokumentasi API Keuangan Simpadu",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/kategori-ukt": {
+            "get": {
+                "tags": [
+                    "Kategori UKT"
+                ],
+                "summary": "Tampilkan semua kategori UKT",
+                "operationId": "71f4da472feba4eb685517db057b319c",
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id_kategori_ukt": {
+                                                "type": "integer"
+                                            },
+                                            "id_prodi": {
+                                                "type": "integer"
+                                            },
+                                            "kategori_ukt": {
+                                                "type": "string"
+                                            },
+                                            "nominal": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Kategori UKT"
+                ],
+                "summary": "Tambah kategori UKT baru",
+                "operationId": "beaeb8bb41ce33e1002a19bc50497e18",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id_prodi",
+                                    "kategori_ukt",
+                                    "nominal"
+                                ],
+                                "properties": {
+                                    "id_prodi": {
+                                        "type": "integer"
+                                    },
+                                    "kategori_ukt": {
+                                        "type": "string"
+                                    },
+                                    "nominal": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Kategori UKT berhasil ditambahkan"
+                    }
+                }
+            }
+        },
+        "/api/kategori-ukt/{id}": {
+            "get": {
+                "tags": [
+                    "Kategori UKT"
+                ],
+                "summary": "Detail kategori UKT",
+                "operationId": "20eacc948b79445a2cc5aadcac641f3e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil detail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id_kategori_ukt": {
+                                            "type": "integer"
+                                        },
+                                        "id_prodi": {
+                                            "type": "integer"
+                                        },
+                                        "nama_prodi": {
+                                            "type": "string"
+                                        },
+                                        "jenjang": {
+                                            "type": "string"
+                                        },
+                                        "kategori_ukt": {
+                                            "type": "string"
+                                        },
+                                        "nominal": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Kategori UKT"
+                ],
+                "summary": "Update kategori UKT",
+                "operationId": "22ec17b4c8a124f3a6a4a7fedfc25749",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id_prodi": {
+                                        "type": "integer"
+                                    },
+                                    "kategori_ukt": {
+                                        "type": "string"
+                                    },
+                                    "nominal": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Kategori UKT berhasil diupdate"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Kategori UKT"
+                ],
+                "summary": "Hapus kategori UKT",
+                "operationId": "a8ec8e51e4ec1167be2e96475a08a691",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Kategori UKT berhasil dihapus"
+                    }
+                }
+            }
+        },
+        "/api/keringanan": {
+            "get": {
+                "tags": [
+                    "Keringanan"
+                ],
+                "summary": "Tampilkan semua keringanan",
+                "operationId": "a361a9683dbb6c246023149a3207c113",
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id_keringanan": {
+                                                "type": "integer"
+                                            },
+                                            "nim": {
+                                                "type": "string"
+                                            },
+                                            "id_thn_ak": {
+                                                "type": "string"
+                                            },
+                                            "jenis_keringanan": {
+                                                "type": "string"
+                                            },
+                                            "jumlah_potongan": {
+                                                "type": "integer"
+                                            },
+                                            "deskripsi_keringanan": {
+                                                "type": "string"
+                                            },
+                                            "status_keringanan": {
+                                                "type": "string"
+                                            },
+                                            "tgl_konfirmasi": {
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "id_tagihan": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Keringanan"
+                ],
+                "summary": "Tambah data keringanan",
+                "operationId": "b2aa35b52f118ee83b11925d2f00b394",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nim",
+                                    "id_thn_ak",
+                                    "jenis_keringanan",
+                                    "jumlah_potongan"
+                                ],
+                                "properties": {
+                                    "nim": {
+                                        "type": "string",
+                                        "example": "1234567890123456"
+                                    },
+                                    "id_thn_ak": {
+                                        "type": "string",
+                                        "example": "20245"
+                                    },
+                                    "jenis_keringanan": {
+                                        "type": "string",
+                                        "example": "Potongan Prestasi"
+                                    },
+                                    "jumlah_potongan": {
+                                        "type": "integer",
+                                        "example": 500000
+                                    },
+                                    "deskripsi_keringanan": {
+                                        "type": "string",
+                                        "example": "Potongan karena juara olimpiade"
+                                    },
+                                    "status_keringanan": {
+                                        "type": "string",
+                                        "example": "Disetujui"
+                                    },
+                                    "tgl_konfirmasi": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-01-20"
+                                    },
+                                    "id_tagihan": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Data keringanan berhasil ditambahkan"
+                    }
+                }
+            }
+        },
+        "/api/keringanan/{id}": {
+            "get": {
+                "tags": [
+                    "Keringanan"
+                ],
+                "summary": "Detail keringanan",
+                "operationId": "5040fa5468fadcd21a70b6112839938a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil detail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id_keringanan": {
+                                            "type": "integer"
+                                        },
+                                        "nim": {
+                                            "type": "string"
+                                        },
+                                        "id_thn_ak": {
+                                            "type": "string"
+                                        },
+                                        "jenis_keringanan": {
+                                            "type": "string"
+                                        },
+                                        "jumlah_potongan": {
+                                            "type": "integer"
+                                        },
+                                        "deskripsi_keringanan": {
+                                            "type": "string"
+                                        },
+                                        "status_keringanan": {
+                                            "type": "string"
+                                        },
+                                        "tgl_konfirmasi": {
+                                            "type": "string",
+                                            "format": "date"
+                                        },
+                                        "id_tagihan": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Keringanan"
+                ],
+                "summary": "Update data keringanan",
+                "operationId": "8007717214c098757fa7d76888387d31",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "jenis_keringanan": {
+                                        "type": "string"
+                                    },
+                                    "jumlah_potongan": {
+                                        "type": "integer"
+                                    },
+                                    "deskripsi_keringanan": {
+                                        "type": "string"
+                                    },
+                                    "status_keringanan": {
+                                        "type": "string"
+                                    },
+                                    "tgl_konfirmasi": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "id_tagihan": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data keringanan berhasil diupdate"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Keringanan"
+                ],
+                "summary": "Hapus data keringanan",
+                "operationId": "0afdab058b3776b1e383405f410c0f41",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data keringanan berhasil dihapus"
+                    }
+                }
+            }
+        },
+        "/api/keringanan/nim/{nim}": {
+            "get": {
+                "tags": [
+                    "Keringanan"
+                ],
+                "summary": "Tampilkan semua keringanan berdasarkan NIM",
+                "operationId": "86c38c81df610db89169e20b5ec1098b",
+                "parameters": [
+                    {
+                        "name": "nim",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id_keringanan": {
+                                                "type": "integer"
+                                            },
+                                            "nim": {
+                                                "type": "string"
+                                            },
+                                            "id_thn_ak": {
+                                                "type": "string"
+                                            },
+                                            "jenis_keringanan": {
+                                                "type": "string"
+                                            },
+                                            "jumlah_potongan": {
+                                                "type": "integer"
+                                            },
+                                            "deskripsi_keringanan": {
+                                                "type": "string"
+                                            },
+                                            "status_keringanan": {
+                                                "type": "string"
+                                            },
+                                            "tgl_konfirmasi": {
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "id_tagihan": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tagihan": {
+            "get": {
+                "tags": [
+                    "Tagihan"
+                ],
+                "summary": "Tampilkan semua tagihan",
+                "operationId": "ea77da2ae8a2d401d97278ec9e99fe54",
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id_tagihan": {
+                                                "type": "integer"
+                                            },
+                                            "nim": {
+                                                "type": "string"
+                                            },
+                                            "nama_tagihan": {
+                                                "type": "string"
+                                            },
+                                            "id_thn_ak": {
+                                                "type": "string"
+                                            },
+                                            "id_kategori_ukt": {
+                                                "type": "integer"
+                                            },
+                                            "status_tagihan": {
+                                                "type": "integer"
+                                            },
+                                            "tgl_terbit": {
+                                                "type": "string",
+                                                "format": "date"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tagihan"
+                ],
+                "summary": "Tambah tagihan baru",
+                "operationId": "53a9865fe29f08fc1deb85893d621b79",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nim",
+                                    "nama_tagihan",
+                                    "id_thn_ak",
+                                    "id_kategori_ukt",
+                                    "tgl_terbit"
+                                ],
+                                "properties": {
+                                    "nim": {
+                                        "type": "string",
+                                        "example": "1234567890123456"
+                                    },
+                                    "nama_tagihan": {
+                                        "type": "string",
+                                        "example": "UKT Semester Genap 2025"
+                                    },
+                                    "id_thn_ak": {
+                                        "type": "string",
+                                        "example": "20245"
+                                    },
+                                    "id_kategori_ukt": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "status_tagihan": {
+                                        "type": "integer",
+                                        "example": 0
+                                    },
+                                    "tgl_terbit": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-01-10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tagihan berhasil ditambahkan"
+                    }
+                }
+            }
+        },
+        "/api/tagihan/{id}": {
+            "get": {
+                "tags": [
+                    "Tagihan"
+                ],
+                "summary": "Detail tagihan",
+                "operationId": "108530daf74cf26fcc8752ecba76a9ee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id_tagihan": {
+                                            "type": "integer"
+                                        },
+                                        "nim": {
+                                            "type": "string"
+                                        },
+                                        "nama_tagihan": {
+                                            "type": "string"
+                                        },
+                                        "kategori_ukt": {
+                                            "type": "string"
+                                        },
+                                        "nominal": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tagihan"
+                ],
+                "summary": "Update tagihan",
+                "operationId": "bf2440a727cd689fa44e7c0718e22b40",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nim": {
+                                        "type": "string"
+                                    },
+                                    "nama_tagihan": {
+                                        "type": "string"
+                                    },
+                                    "id_thn_ak": {
+                                        "type": "string"
+                                    },
+                                    "id_kategori_ukt": {
+                                        "type": "integer"
+                                    },
+                                    "status_tagihan": {
+                                        "type": "integer"
+                                    },
+                                    "tgl_terbit": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tagihan berhasil diupdate"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tagihan"
+                ],
+                "summary": "Hapus tagihan",
+                "operationId": "0daf2ccb7d9a754152506c4162dafdb1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tagihan berhasil dihapus"
+                    }
+                }
+            }
+        },
+        "/api/tagihan/{id}/nominal-akhir": {
+            "get": {
+                "tags": [
+                    "Tagihan"
+                ],
+                "summary": "Hitung nominal akhir tagihan setelah potongan keringanan",
+                "operationId": "abe0999ce5efcb149ac29f28c6914fb1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Nominal akhir tagihan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id_tagihan": {
+                                            "type": "integer"
+                                        },
+                                        "nim": {
+                                            "type": "string"
+                                        },
+                                        "nama_tagihan": {
+                                            "type": "string"
+                                        },
+                                        "kategori_ukt": {
+                                            "type": "string"
+                                        },
+                                        "nominal_ukt": {
+                                            "type": "integer"
+                                        },
+                                        "total_potongan": {
+                                            "type": "integer"
+                                        },
+                                        "nominal_akhir": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Kategori UKT",
+            "description": "Kategori UKT"
+        },
+        {
+            "name": "Keringanan",
+            "description": "Keringanan"
+        },
+        {
+            "name": "Tagihan",
+            "description": "Tagihan"
+        }
+    ]
+}

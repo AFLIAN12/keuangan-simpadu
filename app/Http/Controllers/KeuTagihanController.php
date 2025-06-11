@@ -6,13 +6,65 @@ use App\Models\KeuTagihan;
 use App\Models\KeuKeringanan;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Info(
+ *     version="1.0.0",
+ *     title="Keuangan Simpadu API",
+ *     description="Dokumentasi API Keuangan Simpadu"
+ * )
+ */
+
 class KeuTagihanController extends Controller
 {
+  /**
+ * @OA\Get(
+ *     path="/api/tagihan",
+ *     summary="Tampilkan semua tagihan",
+ *     tags={"Tagihan"},
+ *     @OA\Response(
+ *         response=200,
+ *         description="Berhasil mengambil data",
+ *         @OA\JsonContent(type="array", @OA\Items(
+ *             @OA\Property(property="id_tagihan", type="integer"),
+ *             @OA\Property(property="nim", type="string"),
+ *             @OA\Property(property="nama_tagihan", type="string"),
+ *             @OA\Property(property="id_thn_ak", type="string"),
+ *             @OA\Property(property="id_kategori_ukt", type="integer"),
+ *             @OA\Property(property="status_tagihan", type="integer"),
+ *             @OA\Property(property="tgl_terbit", type="string", format="date")
+ *         ))
+ *     )
+ * )
+ */
     // Tampilkan semua tagihan
     public function index()
     {
         return response()->json(KeuTagihan::all());
     }
+
+    /**
+ * @OA\Post(
+ *     path="/api/tagihan",
+ *     summary="Tambah tagihan baru",
+ *     tags={"Tagihan"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"nim","nama_tagihan","id_thn_ak","id_kategori_ukt","tgl_terbit"},
+ *             @OA\Property(property="nim", type="string", example="1234567890123456"),
+ *             @OA\Property(property="nama_tagihan", type="string", example="UKT Semester Genap 2025"),
+ *             @OA\Property(property="id_thn_ak", type="string", example="20245"),
+ *             @OA\Property(property="id_kategori_ukt", type="integer", example=1),
+ *             @OA\Property(property="status_tagihan", type="integer", example=0),
+ *             @OA\Property(property="tgl_terbit", type="string", format="date", example="2025-01-10")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=201,
+ *         description="Tagihan berhasil ditambahkan"
+ *     )
+ * )
+ */
 
     // Simpan data tagihan baru
     public function store(Request $request)
@@ -29,6 +81,30 @@ class KeuTagihanController extends Controller
         return response()->json(['message' => 'Tagihan berhasil ditambahkan.', 'data' => $tagihan], 201);
     }
 
+        /**
+ * @OA\Get(
+ *     path="/api/tagihan/{id}",
+ *     summary="Detail tagihan",
+ *     tags={"Tagihan"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Success",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="id_tagihan", type="integer"),
+ *             @OA\Property(property="nim", type="string"),
+ *             @OA\Property(property="nama_tagihan", type="string"),
+ *             @OA\Property(property="kategori_ukt", type="string"),
+ *             @OA\Property(property="nominal", type="integer")
+ *         )
+ *     )
+ * )
+ */
     // Detail tagihan
     public function show($id)
     {
@@ -47,6 +123,35 @@ class KeuTagihanController extends Controller
     ]);
     }
 
+    /**
+ * @OA\Put(
+ *     path="/api/tagihan/{id}",
+ *     summary="Update tagihan",
+ *     tags={"Tagihan"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             @OA\Property(property="nim", type="string"),
+ *             @OA\Property(property="nama_tagihan", type="string"),
+ *             @OA\Property(property="id_thn_ak", type="string"),
+ *             @OA\Property(property="id_kategori_ukt", type="integer"),
+ *             @OA\Property(property="status_tagihan", type="integer"),
+ *             @OA\Property(property="tgl_terbit", type="string", format="date")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Tagihan berhasil diupdate"
+ *     )
+ * )
+ */
+
     // Update tagihan
     public function update(Request $request, $id)
     {
@@ -63,6 +168,23 @@ class KeuTagihanController extends Controller
         return response()->json(['message' => 'Tagihan berhasil diupdate.', 'data' => $tagihan]);
     }
 
+    /**
+ * @OA\Delete(
+ *     path="/api/tagihan/{id}",
+ *     summary="Hapus tagihan",
+ *     tags={"Tagihan"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Tagihan berhasil dihapus"
+ *     )
+ * )
+ */
     // Hapus tagihan
     public function destroy($id)
     {
@@ -70,7 +192,33 @@ class KeuTagihanController extends Controller
         $tagihan->delete();
         return response()->json(['message' => 'Tagihan berhasil dihapus.']);
     }
-
+    
+/**
+ * @OA\Get(
+ *     path="/api/tagihan/{id}/nominal-akhir",
+ *     summary="Hitung nominal akhir tagihan setelah potongan keringanan",
+ *     tags={"Tagihan"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Nominal akhir tagihan",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="id_tagihan", type="integer"),
+ *             @OA\Property(property="nim", type="string"),
+ *             @OA\Property(property="nama_tagihan", type="string"),
+ *             @OA\Property(property="kategori_ukt", type="string"),
+ *             @OA\Property(property="nominal_ukt", type="integer"),
+ *             @OA\Property(property="total_potongan", type="integer"),
+ *             @OA\Property(property="nominal_akhir", type="integer")
+ *         )
+ *     )
+ * )
+ */
     // Hitung nominal akhir tagihan setelah potongan keringanan
     public function nominalAkhir($id)
     {
