@@ -137,7 +137,7 @@ class KeuTagihanController extends Controller
         'status_tagihan' => $tagihan->status_tagihan,
         'tgl_terbit' => $tagihan->tgl_terbit,
         'id_kategori_ukt' => $tagihan->id_kategori_ukt,
-        'kategori_ukt' => $tagihan->kategoriUkt ? $tagihan->kategoriUkt->kategori : null,
+        'kategori_ukt' => $tagihan->kategoriUkt ? $tagihan->kategoriUkt->kategori_ukt : null,
         'nominal' => $tagihan->kategoriUkt ? $tagihan->kategoriUkt->nominal : null,
     ]);
     }
@@ -257,7 +257,7 @@ class KeuTagihanController extends Controller
         'id_tagihan' => $tagihan->id_tagihan,
         'nim' => $tagihan->nim,
         'nama_tagihan' => $tagihan->nama_tagihan,
-        'kategori_ukt' => $tagihan->kategoriUkt ? $tagihan->kategoriUkt->kategori : null,
+        'kategori_ukt' => $tagihan->kategoriUkt ? $tagihan->kategoriUkt->kategori_ukt : null,
         'nominal_ukt' => $nominalUkt,
         'total_potongan' => $totalPotongan,
         'nominal_akhir' => $nominalAkhir
